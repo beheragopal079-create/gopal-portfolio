@@ -234,6 +234,23 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [selectedSkill, setSelectedSkill] = useState<SkillItem>(SKILLS[0]);
   const [emailCopied, setEmailCopied] = useState(false);
+  const [splashPhase, setSplashPhase] = useState<'visible' | 'fading' | 'done'>('visible');
+
+  // Opening Splash Screen (2.5 seconds visible, then smooth CSS fade-out)
+  useEffect(() => {
+    const fadeTimer = window.setTimeout(() => {
+      setSplashPhase('fading');
+    }, 2500);
+
+    const removeTimer = window.setTimeout(() => {
+      setSplashPhase('done');
+    }, 3050);
+
+    return () => {
+      window.clearTimeout(fadeTimer);
+      window.clearTimeout(removeTimer);
+    };
+  }, []);
 
   useEffect(() => {
     const sections = NAV_LINKS.map((item) => document.getElementById(item.id)).filter(
@@ -242,7 +259,7 @@ export default function App() {
 
     if (sections.length === 0) return;
 
-    const observer = new IntersectionObserver(
+    const navObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
@@ -256,8 +273,37 @@ export default function App() {
       }
     );
 
-    sections.forEach((sec) => observer.observe(sec));
-    return () => observer.disconnect();
+    sections.forEach((sec) => navObserver.observe(sec));
+    return () => navObserver.disconnect();
+  }, []);
+
+  // Scroll-Reveal Animation for Sections
+  useEffect(() => {
+    const revealEls = Array.from(document.querySelectorAll('.reveal-section'));
+    if (revealEls.length === 0) return;
+
+    if (!('IntersectionObserver' in window)) {
+      revealEls.forEach((el) => el.classList.add('is-visible'));
+      return;
+    }
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+          }
+        }
+      },
+      {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px',
+      }
+    );
+
+    revealEls.forEach((el) => revealObserver.observe(el));
+    return () => revealObserver.disconnect();
   }, []);
 
   useEffect(() => {
@@ -304,6 +350,104 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-blue-700 selection:text-white">
+      {/* Aerospace Opening Splash Screen (2.5s) */}
+      {splashPhase !== 'done' && (
+        <div
+          aria-label="Opening aerospace intro"
+          className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#060E1F] px-6 text-white transition-opacity duration-500 ease-out ${
+            splashPhase === 'fading' ? 'opacity-0 pointer-events-none' : 'opacity-100'
+          }`}
+        >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-30"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 50% 42%, rgba(37, 99, 235, 0.32), transparent 55%), linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px)',
+              backgroundSize: '100% 100%, 56px 56px, 56px 56px',
+            }}
+          />
+
+          <div className="relative flex w-full max-w-md flex-col items-center text-center">
+            {/* Minimalist Rocket, Orbital Trajectory & Pulsing Stars */}
+            <svg
+              viewBox="0 0 220 130"
+              className="h-28 w-48"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="34"
+                cy="34"
+                r="2"
+                fill="#93C5FD"
+                className="splash-star"
+                style={{ animationDelay: '0ms' }}
+              />
+              <circle
+                cx="184"
+                cy="28"
+                r="2.2"
+                fill="#FFFFFF"
+                className="splash-star"
+                style={{ animationDelay: '350ms' }}
+              />
+              <circle
+                cx="166"
+                cy="96"
+                r="1.8"
+                fill="#60A5FA"
+                className="splash-star"
+                style={{ animationDelay: '700ms' }}
+              />
+              <circle
+                cx="52"
+                cy="94"
+                r="1.8"
+                fill="#93C5FD"
+                className="splash-star"
+                style={{ animationDelay: '500ms' }}
+              />
+
+              {/* Orbital Arc */}
+              <path
+                d="M 30 102 Q 108 18 190 36"
+                stroke="#3B82F6"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                className="splash-orbit-path"
+              />
+
+              {/* Minimalist Geometric Aerospace Craft */}
+              <g className="splash-rocket">
+                <g transform="translate(102, 54) rotate(42)">
+                  <path
+                    d="M0 -18 C5 -8 6 4 5 12 L-5 12 C-6 4 -5 -8 0 -18 Z"
+                    fill="#FFFFFF"
+                  />
+                  <path d="M-5 6 L-10 13 L-4 12 Z" fill="#60A5FA" />
+                  <path d="M5 6 L10 13 L4 12 Z" fill="#60A5FA" />
+                  <circle cx="0" cy="-3" r="2.2" fill="#071124" />
+                  <path d="M-2.5 13 L0 21 L2.5 13 Z" fill="#3B82F6" />
+                </g>
+              </g>
+            </svg>
+
+            <h2 className="splash-name mt-2 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              Gopal Krishna Behera
+            </h2>
+            <p className="splash-subtitle mt-2 text-xs font-medium tracking-wide text-blue-300 sm:text-sm">
+              Aspiring Aerospace Engineer · Creator of AstravoraX
+            </p>
+
+            {/* 2.5s Trajectory Progress Bar */}
+            <div className="mt-7 h-0.5 w-48 overflow-hidden rounded-full bg-slate-800">
+              <div className="splash-progress-bar h-full w-full bg-blue-500" />
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Sticky Top Navigation Bar (3-Zone Contract) */}
       <header className="sticky top-0 z-40 border-b border-slate-200/90 bg-white/95 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-8 px-4 sm:px-6 lg:px-8">
@@ -485,7 +629,7 @@ export default function App() {
         </section>
 
         {/* 2. About Me Section (Clean White Canvas) */}
-        <section id="about" className="bg-white py-20 sm:py-24">
+        <section id="about" className="reveal-section bg-white py-20 sm:py-24">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
               <div className="lg:col-span-4">
@@ -545,7 +689,7 @@ export default function App() {
         {/* 3. Projects Section (Cool Off-White Canvas, 2-Column Clean Grid) */}
         <section
           id="projects"
-          className="border-y border-slate-200 bg-slate-50/80 py-20 sm:py-24"
+          className="reveal-section border-y border-slate-200 bg-slate-50/80 py-20 sm:py-24"
         >
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
@@ -597,14 +741,14 @@ export default function App() {
               {filteredProjects.map((project) => (
                 <article
                   key={project.id}
-                  className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-transform duration-150 hover:-translate-y-0.5"
+                  className="project-card flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white"
                 >
                   <div className="aspect-[4/3] w-full overflow-hidden border-b border-slate-100 bg-slate-100">
                     <ResilientImage
                       src={project.image}
                       alt={project.imageAlt}
                       fallbackTitle={project.title}
-                      className="h-full w-full object-cover"
+                      className="project-img h-full w-full object-cover"
                     />
                   </div>
 
@@ -653,7 +797,7 @@ export default function App() {
         </section>
 
         {/* 4. Skills Section (Crisp White Canvas, Interactive Architectural Tags) */}
-        <section id="skills" className="bg-white py-20 sm:py-24">
+        <section id="skills" className="reveal-section bg-white py-20 sm:py-24">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold tracking-wider text-blue-700 uppercase">
@@ -724,7 +868,7 @@ export default function App() {
       </main>
 
       {/* 5. Contact Section & Footer (Deep Space Blue) */}
-      <footer id="contact" className="bg-[#071124] text-white">
+      <footer id="contact" className="reveal-section bg-[#071124] text-white">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-7">

@@ -47,3 +47,144 @@
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
+
+/* Aerospace Opening Splash Screen Animations */
+@keyframes splashStarPulse {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.88);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.18);
+  }
+}
+
+@keyframes splashOrbitDraw {
+  from {
+    stroke-dashoffset: 320;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes splashRocketAscend {
+  0% {
+    opacity: 0;
+    transform: translate3d(-18px, 18px, 0) scale(0.88);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(14px, -14px, 0) scale(1);
+  }
+}
+
+@keyframes splashNameReveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes splashProgressFill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.splash-star {
+  animation: splashStarPulse 2.2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.splash-orbit-path {
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+  animation: splashOrbitDraw 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.splash-rocket {
+  animation: splashRocketAscend 2.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.splash-name {
+  opacity: 0;
+  animation: splashNameReveal 700ms cubic-bezier(0.16, 1, 0.3, 1) 250ms forwards;
+}
+
+.splash-subtitle {
+  opacity: 0;
+  animation: splashNameReveal 700ms cubic-bezier(0.16, 1, 0.3, 1) 450ms forwards;
+}
+
+.splash-progress-bar {
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: splashProgressFill 2.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Scroll-Reveal Sections */
+.reveal-section {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-section.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Project Card Hover Animations */
+.project-card {
+  transition:
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 200ms ease;
+}
+
+.project-card:hover {
+  transform: translate3d(0, -4px, 0);
+  border-color: #cbd5e1;
+  box-shadow: 0 18px 34px -16px rgba(7, 17, 36, 0.16);
+}
+
+.project-card .project-img {
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card:hover .project-img {
+  transform: scale(1.035);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-section {
+    opacity: 1;
+    transform: none;
+  }
+
+  .splash-name,
+  .splash-subtitle {
+    opacity: 1;
+  }
+
+  .splash-progress-bar {
+    transform: scaleX(1);
+  }
+}
+

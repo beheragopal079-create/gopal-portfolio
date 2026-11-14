@@ -439,11 +439,16 @@
         border: 1px solid var(--border);
         border-radius: 16px;
         overflow: hidden;
-        transition: transform 150ms ease;
+        transition:
+          transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 200ms ease;
       }
 
       .project-card:hover {
-        transform: translateY(-2px);
+        transform: translate3d(0, -4px, 0);
+        border-color: #cbd5e1;
+        box-shadow: 0 18px 34px -16px rgba(7, 17, 36, 0.16);
       }
 
       .project-card.hidden {
@@ -458,6 +463,15 @@
         align-items: center;
         justify-content: center;
         padding: 24px;
+        overflow: hidden;
+      }
+
+      .project-media svg {
+        transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .project-card:hover .project-media svg {
+        transform: scale(1.045);
       }
 
       .project-body {
@@ -758,9 +772,209 @@
           grid-template-columns: 1fr;
         }
       }
+
+      /* Opening Splash Screen (2.5s Aerospace Intro) */
+      .splash-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background-color: #060e1f;
+        background-image:
+          radial-gradient(circle at 50% 42%, rgba(37, 99, 235, 0.32), transparent 55%),
+          linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+        background-size: 100% 100%, 56px 56px, 56px 56px;
+        color: var(--white);
+        text-align: center;
+        transition: opacity 550ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .splash-screen.fade-out {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .splash-screen.is-gone {
+        display: none;
+      }
+
+      .splash-inner {
+        width: 100%;
+        max-width: 420px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .splash-name {
+        margin-top: 8px;
+        font-family: var(--font-display);
+        font-size: clamp(1.5rem, 4vw, 1.875rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        opacity: 0;
+        animation: splashReveal 700ms cubic-bezier(0.16, 1, 0.3, 1) 250ms forwards;
+      }
+
+      .splash-sub {
+        margin-top: 8px;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: #93c5fd;
+        opacity: 0;
+        animation: splashReveal 700ms cubic-bezier(0.16, 1, 0.3, 1) 450ms forwards;
+      }
+
+      .splash-track {
+        margin-top: 28px;
+        width: 192px;
+        height: 2px;
+        border-radius: 999px;
+        background: #1e293b;
+        overflow: hidden;
+      }
+
+      .splash-fill {
+        width: 100%;
+        height: 100%;
+        background: #3b82f6;
+        transform: scaleX(0);
+        transform-origin: left center;
+        animation: splashProgress 2.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+
+      .splash-star {
+        animation: splashStarPulse 2.2s ease-in-out infinite;
+        transform-origin: center;
+      }
+
+      .splash-orbit {
+        stroke-dasharray: 320;
+        stroke-dashoffset: 320;
+        animation: splashOrbitDraw 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      .splash-rocket {
+        animation: splashRocketAscend 2.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes splashStarPulse {
+        0%,
+        100% {
+          opacity: 0.25;
+          transform: scale(0.88);
+        }
+        50% {
+          opacity: 0.95;
+          transform: scale(1.18);
+        }
+      }
+
+      @keyframes splashOrbitDraw {
+        from {
+          stroke-dashoffset: 320;
+        }
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes splashRocketAscend {
+        0% {
+          opacity: 0;
+          transform: translate3d(-18px, 18px, 0) scale(0.88);
+        }
+        20% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+          transform: translate3d(14px, -14px, 0) scale(1);
+        }
+      }
+
+      @keyframes splashReveal {
+        from {
+          opacity: 0;
+          transform: translate3d(0, 12px, 0);
+        }
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      @keyframes splashProgress {
+        from {
+          transform: scaleX(0);
+        }
+        to {
+          transform: scaleX(1);
+        }
+      }
+
+      /* Scroll-Reveal Animation */
+      .reveal-section {
+        opacity: 0;
+        transform: translate3d(0, 22px, 0);
+        transition:
+          opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+          transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .reveal-section.is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .reveal-section {
+          opacity: 1;
+          transform: none;
+        }
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
     </style>
   </head>
   <body>
+    <div id="splashScreen" class="splash-screen" aria-label="Opening aerospace intro">
+      <div class="splash-inner">
+        <svg viewBox="0 0 220 130" width="192" height="112" fill="none" aria-hidden="true">
+          <circle cx="34" cy="34" r="2" fill="#93C5FD" class="splash-star" />
+          <circle cx="184" cy="28" r="2.2" fill="#FFFFFF" class="splash-star" style="animation-delay: 350ms" />
+          <circle cx="166" cy="96" r="1.8" fill="#60A5FA" class="splash-star" style="animation-delay: 700ms" />
+          <circle cx="52" cy="94" r="1.8" fill="#93C5FD" class="splash-star" style="animation-delay: 500ms" />
+          <path d="M 30 102 Q 108 18 190 36" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round" class="splash-orbit" />
+          <g class="splash-rocket">
+            <g transform="translate(102, 54) rotate(42)">
+              <path d="M0 -18 C5 -8 6 4 5 12 L-5 12 C-6 4 -5 -8 0 -18 Z" fill="#FFFFFF" />
+              <path d="M-5 6 L-10 13 L-4 12 Z" fill="#60A5FA" />
+              <path d="M5 6 L10 13 L4 12 Z" fill="#60A5FA" />
+              <circle cx="0" cy="-3" r="2.2" fill="#071124" />
+              <path d="M-2.5 13 L0 21 L2.5 13 Z" fill="#3B82F6" />
+            </g>
+          </g>
+        </svg>
+        <p class="splash-name">Gopal Krishna Behera</p>
+        <p class="splash-sub">Aspiring Aerospace Engineer · Creator of AstravoraX</p>
+        <div class="splash-track"><div class="splash-fill"></div></div>
+      </div>
+    </div>
+
     <header class="site-header">
       <div class="container nav-inner">
         <a href="#home" class="brand">Gopal Krishna Behera</a>
@@ -850,7 +1064,7 @@
         </div>
       </section>
 
-      <section id="about" class="section">
+      <section id="about" class="section reveal-section">
         <div class="container about-grid">
           <div>
             <p class="section-kicker">About Me</p>
@@ -894,7 +1108,7 @@
         </div>
       </section>
 
-      <section id="projects" class="section section-alt">
+      <section id="projects" class="section section-alt reveal-section">
         <div class="container">
           <div class="projects-header">
             <div>
@@ -1010,7 +1224,7 @@
         </div>
       </section>
 
-      <section id="skills" class="section">
+      <section id="skills" class="section reveal-section">
         <div class="container">
           <p class="section-kicker">Capabilities</p>
           <h2 class="section-title">Core Skills</h2>
@@ -1051,7 +1265,7 @@
       </section>
     </main>
 
-    <footer id="contact" class="site-footer">
+    <footer id="contact" class="site-footer reveal-section">
       <div class="container">
         <div class="footer-grid">
           <div>
@@ -1090,6 +1304,40 @@
 
     <script>
       (function () {
+        // Opening Splash Screen (2.5 seconds visible, then smooth fade-out)
+        var splash = document.getElementById("splashScreen");
+        if (splash) {
+          setTimeout(function () {
+            splash.classList.add("fade-out");
+            setTimeout(function () {
+              splash.classList.add("is-gone");
+            }, 560);
+          }, 2500);
+        }
+
+        // Scroll-Reveal Sections
+        var revealEls = document.querySelectorAll(".reveal-section");
+        if ("IntersectionObserver" in window && revealEls.length > 0) {
+          var revealObserver = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("is-visible");
+                  revealObserver.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+          );
+          revealEls.forEach(function (el) {
+            revealObserver.observe(el);
+          });
+        } else {
+          revealEls.forEach(function (el) {
+            el.classList.add("is-visible");
+          });
+        }
+
         // Year
         var yearEl = document.getElementById("yearNow");
         if (yearEl) yearEl.textContent = new Date().getFullYear();
