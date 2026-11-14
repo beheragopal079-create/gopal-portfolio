@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gopal Krishna Behera — Portfolio</title>
+    <meta
+      name="description"
+      content="Personal portfolio of Gopal Krishna Behera: Class 9 student, aspiring aerospace engineer, web designer, and creator of AstravoraX."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --space-navy: #071124;
+        --space-blue: #0c1b38;
+        --cobalt: #2563eb;
+        --cobalt-hover: #1d4ed8;
+        --white: #ffffff;
+        --surface-alt: #f8fafc;
+        --border: #e2e8f0;
+        --border-dark: #1e293b;
+        --text-main: #0f172a;
+        --text-muted: #475569;
+        --text-light: #cbd5e1;
+        --font-display: "Outfit", system-ui, -apple-system, sans-serif;
+        --font-body: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, monospace;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        font-family: var(--font-body);
+        color: var(--text-main);
+        background-color: var(--white);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body {
+        margin: 0;
+        line-height: 1.6;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+        font-family: var(--font-display);
+        text-wrap: balance;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1152px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* Sticky Navigation Bar */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        height: 64px;
+      }
+
+      .brand {
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--space-navy);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+
+      .nav-links a {
+        position: relative;
+        padding: 4px 0;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: color 150ms ease;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -2px;
+        height: 2px;
+        background: var(--cobalt);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 150ms ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--space-navy);
+      }
+
+      .nav-links a.active {
+        font-weight: 600;
+      }
+
+      .nav-links a.active::after {
+        transform: scaleX(1);
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-shrink: 0;
+      }
+
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 9px 16px;
+        border-radius: 8px;
+        background: var(--space-navy);
+        color: var(--white);
+        font-size: 0.75rem;
+        font-weight: 600;
+        white-space: nowrap;
+        transition: background-color 150ms ease;
+      }
+
+      .nav-cta:hover {
+        background: var(--cobalt-hover);
+      }
+
+      .menu-toggle {
+        display: none;
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--white);
+        color: var(--text-main);
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mobile-drawer {
+        display: none;
+        border-top: 1px solid var(--border);
+        background: var(--white);
+        padding: 12px 24px 16px;
+      }
+
+      .mobile-drawer.open {
+        display: block;
+      }
+
+      .mobile-drawer a {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 12px;
+        border-radius: 8px;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--text-main);
+      }
+
+      .mobile-drawer a:hover {
+        background: var(--surface-alt);
+      }
+
+      /* Hero Section */
+      .hero {
+        background: var(--space-navy);
+        color: var(--white);
+        padding: 72px 0 64px;
+        background-image:
+          radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.25), transparent 45%),
+          linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+        background-size: 100% 100%, 64px 64px, 64px 64px;
+      }
+
+      .hero-split {
+        display: grid;
+        grid-template-columns: 1.25fr 1fr;
+        gap: 48px;
+        align-items: stretch;
+      }
+
+      .hero-kicker {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #93c5fd;
+      }
+
+      .hero h1 {
+        margin-top: 14px;
+        font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+        font-weight: 700;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        max-width: 16ch;
+      }
+
+      .hero-lead {
+        margin-top: 20px;
+        max-width: 56ch;
+        font-size: 1.0625rem;
+        line-height: 1.65;
+        color: var(--text-light);
+      }
+
+      .hero-cta-wrap {
+        margin-top: 32px;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 12px 24px;
+        border-radius: 8px;
+        background: var(--cobalt);
+        color: var(--white);
+        font-size: 0.875rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background-color 150ms ease;
+      }
+
+      .btn-primary:hover {
+        background: #3b82f6;
+      }
+
+      .hero-visual {
+        border-radius: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        background: linear-gradient(145deg, #0b1933 0%, #091429 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+        min-height: 300px;
+      }
+
+      .hero-highlights {
+        margin-top: 48px;
+        padding-top: 32px;
+        border-top: 1px solid var(--border-dark);
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .highlight-label {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: #93c5fd;
+      }
+
+      .highlight-title {
+        margin-top: 6px;
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--white);
+      }
+
+      .highlight-sub {
+        margin-top: 2px;
+        font-size: 0.875rem;
+        color: #94a3b8;
+      }
+
+      /* Section Shared Styles */
+      .section {
+        padding: 84px 0;
+      }
+
+      .section-alt {
+        background: var(--surface-alt);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .section-kicker {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--cobalt-hover);
+      }
+
+      .section-title {
+        margin-top: 8px;
+        font-size: clamp(1.75rem, 3vw, 2.25rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--space-navy);
+      }
+
+      /* About Section */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 48px;
+      }
+
+      .about-copy {
+        font-size: 1.0625rem;
+        line-height: 1.75;
+        color: #334155;
+        max-width: 66ch;
+      }
+
+      .about-pillars {
+        margin-top: 36px;
+        padding-top: 28px;
+        border-top: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .pillar-title {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--space-navy);
+      }
+
+      .pillar-text {
+        margin-top: 6px;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: var(--text-muted);
+      }
+
+      /* Projects Section */
+      .projects-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .filter-tabs {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 4px;
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+      }
+
+      .filter-btn {
+        min-height: 36px;
+        padding: 6px 14px;
+        border: none;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--text-muted);
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background-color 150ms ease, color 150ms ease;
+      }
+
+      .filter-btn:hover {
+        color: var(--space-navy);
+        background: var(--surface-alt);
+      }
+
+      .filter-btn.active {
+        background: var(--space-navy);
+        color: var(--white);
+      }
+
+      .projects-grid {
+        margin-top: 36px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px;
+      }
+
+      .project-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: transform 150ms ease;
+      }
+
+      .project-card:hover {
+        transform: translateY(-2px);
+      }
+
+      .project-card.hidden {
+        display: none;
+      }
+
+      .project-media {
+        aspect-ratio: 4 / 3;
+        background: linear-gradient(135deg, #071124 0%, #10254a 100%);
+        border-bottom: 1px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .project-body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 24px 28px;
+      }
+
+      .project-kicker {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #64748b;
+      }
+
+      .project-title {
+        margin-top: 6px;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--space-navy);
+      }
+
+      .project-desc {
+        margin-top: 10px;
+        flex: 1;
+        font-size: 0.9375rem;
+        line-height: 1.65;
+        color: var(--text-muted);
+      }
+
+      .project-actions {
+        margin-top: 22px;
+        padding-top: 16px;
+        border-top: 1px solid #f1f5f9;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .btn-card {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-height: 40px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        background: var(--space-navy);
+        color: var(--white);
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background-color 150ms ease;
+      }
+
+      .btn-card:hover {
+        background: var(--cobalt-hover);
+      }
+
+      .btn-card-secondary {
+        background: var(--white);
+        color: #334155;
+        border: 1px solid var(--border);
+      }
+
+      .btn-card-secondary:hover {
+        background: var(--surface-alt);
+        border-color: #cbd5e1;
+      }
+
+      /* Skills Section */
+      .skills-intro {
+        margin-top: 10px;
+        max-width: 56ch;
+        font-size: 1rem;
+        color: var(--text-muted);
+      }
+
+      .skills-tags {
+        margin-top: 28px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .skill-tag {
+        min-height: 44px;
+        padding: 10px 18px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface-alt);
+        color: var(--space-navy);
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+      }
+
+      .skill-tag:hover {
+        border-color: #93c5fd;
+        background: #eff6ff;
+      }
+
+      .skill-tag.active {
+        background: var(--space-navy);
+        border-color: var(--space-navy);
+        color: var(--white);
+      }
+
+      .skill-detail {
+        margin-top: 28px;
+        padding: 28px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: var(--surface-alt);
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 32px;
+        align-items: center;
+      }
+
+      .skill-detail-meta {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--cobalt-hover);
+      }
+
+      .skill-detail-name {
+        margin-top: 4px;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--space-navy);
+      }
+
+      .skill-detail-applied {
+        margin-top: 6px;
+        font-size: 0.8125rem;
+        color: var(--text-muted);
+      }
+
+      .skill-detail-body {
+        border-left: 1px solid var(--border);
+        padding-left: 28px;
+      }
+
+      .skill-detail-focus {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--space-navy);
+      }
+
+      .skill-detail-desc {
+        margin-top: 8px;
+        font-size: 0.9375rem;
+        color: var(--text-muted);
+      }
+
+      /* Contact Footer */
+      .site-footer {
+        background: var(--space-navy);
+        color: var(--white);
+        padding: 72px 0 40px;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+
+      .footer-title {
+        margin-top: 8px;
+        font-size: clamp(1.625rem, 3vw, 2.25rem);
+        font-weight: 700;
+        line-height: 1.18;
+      }
+
+      .footer-copy {
+        margin-top: 14px;
+        max-width: 52ch;
+        color: var(--text-light);
+        font-size: 1rem;
+      }
+
+      .contact-card {
+        background: var(--space-blue);
+        border: 1px solid var(--border-dark);
+        border-radius: 16px;
+        padding: 24px;
+      }
+
+      .contact-label {
+        font-size: 0.75rem;
+        color: #94a3b8;
+      }
+
+      .contact-email {
+        margin-top: 6px;
+        font-family: var(--font-mono);
+        font-size: 0.9375rem;
+        color: var(--white);
+        word-break: break-all;
+      }
+
+      .contact-actions {
+        margin-top: 18px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .btn-copy {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        background: var(--space-navy);
+        border: 1px solid #334155;
+        color: #e2e8f0;
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: border-color 150ms ease, color 150ms ease;
+      }
+
+      .btn-copy:hover {
+        border-color: #64748b;
+        color: var(--white);
+      }
+
+      .footer-bottom {
+        margin-top: 52px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border-dark);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 0.75rem;
+        color: #94a3b8;
+      }
+
+      .footer-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .footer-nav a:hover {
+        color: var(--white);
+      }
+
+      @media (max-width: 960px) {
+        .hero-split,
+        .about-grid,
+        .footer-grid,
+        .skill-detail {
+          grid-template-columns: 1fr;
+        }
+
+        .skill-detail-body {
+          border-left: none;
+          padding-left: 0;
+          border-top: 1px solid var(--border);
+          padding-top: 18px;
+        }
+
+        .hero-highlights {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-links,
+        .nav-cta {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: inline-flex;
+        }
+
+        .projects-grid,
+        .about-pillars {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-highlights {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-inner">
+        <a href="#home" class="brand">Gopal Krishna Behera</a>
+
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#home" class="active" data-nav="home">Home</a>
+          <a href="#about" data-nav="about">About</a>
+          <a href="#projects" data-nav="projects">Projects</a>
+          <a href="#skills" data-nav="skills">Skills</a>
+          <a href="#contact" data-nav="contact">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="#contact" class="nav-cta">Contact Me</a>
+          <button
+            type="button"
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+          >
+            &#9776;
+          </button>
+        </div>
+      </div>
+
+      <nav class="mobile-drawer" id="mobileDrawer" aria-label="Mobile navigation">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="container">
+          <div class="hero-split">
+            <div>
+              <p class="hero-kicker">
+                Class 9 Student | Aspiring Aerospace Engineer | Creator of AstravoraX
+              </p>
+              <h1>Gopal Krishna Behera</h1>
+              <p class="hero-lead">
+                Building clean web experiences, biomimetic science prototypes for NCSC, and
+                educational geography media—combining analytical discipline with practical design.
+              </p>
+              <div class="hero-cta-wrap">
+                <a href="#projects" class="btn-primary">View My Work &rarr;</a>
+              </div>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+              <svg viewBox="0 0 320 220" width="100%" height="200" fill="none">
+                <circle cx="160" cy="110" r="82" stroke="#2563EB" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="4 4" />
+                <ellipse cx="160" cy="110" rx="126" ry="44" transform="rotate(-18 160 110)" stroke="#60A5FA" stroke-opacity="0.7" stroke-width="1.5" />
+                <circle cx="160" cy="110" r="34" fill="#0F264F" stroke="#93C5FD" stroke-width="1.5" />
+                <path d="M160 52 L173 94 L208 110 L173 126 L160 168 L147 126 L112 110 L147 94 Z" fill="#FFFFFF" fill-opacity="0.92" />
+                <circle cx="268" cy="70" r="5" fill="#60A5FA" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="hero-highlights">
+            <div>
+              <p class="highlight-label">01 / Academics</p>
+              <p class="highlight-title">Siddhivinayak Public School</p>
+              <p class="highlight-sub">Class 9 Student</p>
+            </div>
+            <div>
+              <p class="highlight-label">02 / Science</p>
+              <p class="highlight-title">NCSC Science Congress</p>
+              <p class="highlight-sub">Biomimetic &amp; Mechanical Research</p>
+            </div>
+            <div>
+              <p class="highlight-label">03 / Strategy</p>
+              <p class="highlight-title">International Chess Festival</p>
+              <p class="highlight-sub">Competitive Player</p>
+            </div>
+            <div>
+              <p class="highlight-label">04 / Media</p>
+              <p class="highlight-title">AstravoraX Channel</p>
+              <p class="highlight-sub">Educational Geography Creator</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="container about-grid">
+          <div>
+            <p class="section-kicker">About Me</p>
+            <h2 class="section-title">Curious mind, structured builder.</h2>
+          </div>
+
+          <div>
+            <p class="about-copy">
+              I am a Class 9 student at Siddhivinayak Public School with a deep passion for science,
+              technology, and geography. Whether I am competing in NCSC science congresses, playing
+              at the International Chess Festival, or creating geography content for my YouTube
+              channel, AstravoraX, I am always eager to learn and build new things. My ultimate goal
+              is to become an aerospace engineer, and I am currently building my skills in web
+              development, UI design, and research.
+            </p>
+
+            <div class="about-pillars">
+              <div>
+                <h3 class="pillar-title">Aerospace Trajectory</h3>
+                <p class="pillar-text">
+                  Developing strong foundations in physics, geography, and applied mechanical
+                  problem-solving toward aerospace engineering.
+                </p>
+              </div>
+              <div>
+                <h3 class="pillar-title">Web &amp; UI Craft</h3>
+                <p class="pillar-text">
+                  Building responsive websites and mobile interface prototypes as a dedicated
+                  teenlancer focused on clarity and usability.
+                </p>
+              </div>
+              <div>
+                <h3 class="pillar-title">Analytical Discipline</h3>
+                <p class="pillar-text">
+                  Honed through competitive play at the International Chess Festival and
+                  hypothesis-driven NCSC research.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section section-alt">
+        <div class="container">
+          <div class="projects-header">
+            <div>
+              <p class="section-kicker">Selected Work</p>
+              <h2 class="section-title">Projects &amp; Research</h2>
+            </div>
+
+            <div class="filter-tabs" role="tablist" aria-label="Filter projects">
+              <button type="button" class="filter-btn active" data-filter="all">All Projects</button>
+              <button type="button" class="filter-btn" data-filter="web">Web &amp; UI</button>
+              <button type="button" class="filter-btn" data-filter="science">Science</button>
+              <button type="button" class="filter-btn" data-filter="media">Media</button>
+            </div>
+          </div>
+
+          <div class="projects-grid">
+            <article class="project-card" data-category="web">
+              <div class="project-media" aria-hidden="true">
+                <svg viewBox="0 0 260 160" width="100%" height="140" fill="none">
+                  <rect x="20" y="16" width="220" height="128" rx="10" fill="#FFFFFF" />
+                  <rect x="20" y="16" width="220" height="24" rx="10" fill="#E2E8F0" />
+                  <rect x="36" y="54" width="56" height="68" rx="6" fill="#F1F5F9" stroke="#CBD5E1" />
+                  <rect x="102" y="54" width="56" height="68" rx="6" fill="#F1F5F9" stroke="#CBD5E1" />
+                  <rect x="168" y="54" width="56" height="68" rx="6" fill="#F1F5F9" stroke="#CBD5E1" />
+                </svg>
+              </div>
+              <div class="project-body">
+                <p class="project-kicker">Web Design · Responsive Storefront</p>
+                <h3 class="project-title">Freshora Market</h3>
+                <p class="project-desc">
+                  A responsive sample website built focusing on clean design and user experience.
+                </p>
+                <div class="project-actions">
+                  <a
+                    href="https://freshora-market.netlify.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-card"
+                  >
+                    View Live Website &#8599;
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-category="web">
+              <div class="project-media" aria-hidden="true">
+                <svg viewBox="0 0 260 160" width="100%" height="140" fill="none">
+                  <rect x="88" y="12" width="84" height="136" rx="14" fill="#0F172A" stroke="#60A5FA" stroke-width="2" />
+                  <circle cx="130" cy="70" r="26" stroke="#FFFFFF" stroke-width="4" />
+                  <rect x="104" y="114" width="52" height="14" rx="7" fill="#2563EB" />
+                </svg>
+              </div>
+              <div class="project-body">
+                <p class="project-kicker">App Interface · Mobile UX Prototype</p>
+                <h3 class="project-title">Nexora Focus</h3>
+                <p class="project-desc">
+                  A sample application prototype showcasing UI optimization and intuitive mobile
+                  navigation.
+                </p>
+                <div class="project-actions">
+                  <a
+                    href="https://nexora-focus.netlify.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-card"
+                  >
+                    View Live App &#8599;
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-category="science">
+              <div class="project-media" aria-hidden="true">
+                <svg viewBox="0 0 260 160" width="100%" height="140" fill="none">
+                  <path d="M60 120 A70 70 0 0 1 200 120 Z" stroke="#93C5FD" stroke-width="2" fill="#0F294D" />
+                  <circle cx="105" cy="92" r="5" fill="#FFFFFF" />
+                  <circle cx="132" cy="76" r="6" fill="#FFFFFF" />
+                  <circle cx="158" cy="94" r="4" fill="#FFFFFF" />
+                </svg>
+              </div>
+              <div class="project-body">
+                <p class="project-kicker">NCSC Research · Biomimetic &amp; Mechanical</p>
+                <h3 class="project-title">Scientific Innovations</h3>
+                <p class="project-desc">
+                  Developed the "Aqua-Beetle: Zero-Electricity Biomimetic Atmospheric Fog Harvester"
+                  for the NCSC and a "Passive Mechanical Water-Leak Detector" focusing on biomimetic
+                  and mechanical engineering principles.
+                </p>
+              </div>
+            </article>
+
+            <article class="project-card" data-category="media">
+              <div class="project-media" aria-hidden="true">
+                <svg viewBox="0 0 260 160" width="100%" height="140" fill="none">
+                  <circle cx="130" cy="80" r="54" fill="#0D2345" stroke="#60A5FA" stroke-width="2" />
+                  <ellipse cx="130" cy="80" rx="26" ry="54" stroke="#93C5FD" stroke-opacity="0.55" />
+                  <line x1="76" y1="80" x2="184" y2="80" stroke="#93C5FD" stroke-opacity="0.55" />
+                  <polygon points="122,68 144,80 122,92" fill="#FFFFFF" />
+                </svg>
+              </div>
+              <div class="project-body">
+                <p class="project-kicker">Educational Media · Geography</p>
+                <h3 class="project-title">AstravoraX YouTube Channel</h3>
+                <p class="project-desc">
+                  Produce, edit, and manage an educational YouTube channel focused on detailed
+                  geographical concepts.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" class="section">
+        <div class="container">
+          <p class="section-kicker">Capabilities</p>
+          <h2 class="section-title">Core Skills</h2>
+          <p class="skills-intro">
+            Select any skill tag to explore how it connects to my web design, science research, and
+            educational media work.
+          </p>
+
+          <div class="skills-tags" role="tablist" aria-label="Skills">
+            <button type="button" class="skill-tag active" data-skill="0">
+              Web Development (HTML/CSS)
+            </button>
+            <button type="button" class="skill-tag" data-skill="1">UI Optimization</button>
+            <button type="button" class="skill-tag" data-skill="2">Video Editing</button>
+            <button type="button" class="skill-tag" data-skill="3">Scientific Research</button>
+            <button type="button" class="skill-tag" data-skill="4">Project Management</button>
+          </div>
+
+          <div class="skill-detail" id="skillDetailPanel">
+            <div>
+              <p class="skill-detail-meta">Selected Capability</p>
+              <h3 class="skill-detail-name" id="skillName">Web Development (HTML/CSS)</h3>
+              <p class="skill-detail-applied" id="skillApplied">
+                Applied in: Freshora Market &amp; Personal Portfolio Architecture
+              </p>
+            </div>
+            <div class="skill-detail-body">
+              <p class="skill-detail-focus" id="skillFocus">
+                Semantic structure, responsive CSS grids, and accessible cross-device layouts.
+              </p>
+              <p class="skill-detail-desc" id="skillDesc">
+                Building clean, fast-loading web pages from scratch with structured HTML5,
+                responsive Flexbox/Grid layouts, and attention to typography.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contact" class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <p class="section-kicker" style="color: #93c5fd">Contact &amp; Opportunities</p>
+            <h2 class="footer-title">
+              Open to internships, collaborations &amp; freelance web projects.
+            </h2>
+            <p class="footer-copy">
+              Looking for a motivated teenlancer to build a clean responsive website, optimize an
+              interface, or collaborate on STEM &amp; educational initiatives? Reach out directly.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <p class="contact-label">Direct Email</p>
+            <p class="contact-email" id="contactEmail">beheragopal079@gmail.com</p>
+            <div class="contact-actions">
+              <a href="mailto:beheragopal079@gmail.com" class="btn-primary">Send Email</a>
+              <button type="button" class="btn-copy" id="copyEmailBtn">Copy Email</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; <span id="yearNow"></span> Gopal Krishna Behera. All rights reserved.</p>
+          <div class="footer-nav">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        // Year
+        var yearEl = document.getElementById("yearNow");
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        // Mobile Drawer
+        var menuToggle = document.getElementById("menuToggle");
+        var mobileDrawer = document.getElementById("mobileDrawer");
+        if (menuToggle && mobileDrawer) {
+          menuToggle.addEventListener("click", function () {
+            var isOpen = mobileDrawer.classList.toggle("open");
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+          });
+
+          mobileDrawer.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+              mobileDrawer.classList.remove("open");
+              menuToggle.setAttribute("aria-expanded", "false");
+            });
+          });
+        }
+
+        // Active Nav Link on Scroll
+        var navLinks = document.querySelectorAll(".nav-links a[data-nav]");
+        var sectionIds = ["home", "about", "projects", "skills", "contact"];
+        if ("IntersectionObserver" in window) {
+          var observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  navLinks.forEach(function (link) {
+                    link.classList.toggle(
+                      "active",
+                      link.getAttribute("data-nav") === entry.target.id
+                    );
+                  });
+                }
+              });
+            },
+            { rootMargin: "-30% 0px -55% 0px", threshold: 0 }
+          );
+
+          sectionIds.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) observer.observe(el);
+          });
+        }
+
+        // Project Category Filter
+        var filterBtns = document.querySelectorAll(".filter-btn");
+        var projectCards = document.querySelectorAll(".project-card");
+        filterBtns.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var filter = btn.getAttribute("data-filter");
+            filterBtns.forEach(function (b) {
+              b.classList.remove("active");
+            });
+            btn.classList.add("active");
+            projectCards.forEach(function (card) {
+              var cat = card.getAttribute("data-category");
+              card.classList.toggle("hidden", filter !== "all" && cat !== filter);
+            });
+          });
+        });
+
+        // Interactive Skills Explorer
+        var skillsData = [
+          {
+            name: "Web Development (HTML/CSS)",
+            applied: "Applied in: Freshora Market & Personal Portfolio Architecture",
+            focus: "Semantic structure, responsive CSS grids, and accessible cross-device layouts.",
+            desc: "Building clean, fast-loading web pages from scratch with structured HTML5, responsive Flexbox/Grid layouts, and attention to typography."
+          },
+          {
+            name: "UI Optimization",
+            applied: "Applied in: Nexora Focus & Freshora Market",
+            focus: "Visual hierarchy, mobile navigation clarity, and streamlined user flows.",
+            desc: "Refining interface spacing, contrast, and touch targets so users can navigate web and mobile interfaces comfortably without clutter."
+          },
+          {
+            name: "Video Editing",
+            applied: "Applied in: AstravoraX YouTube Channel",
+            focus: "Narrative pacing, educational motion graphics, and audio-visual clarity.",
+            desc: "Transforming detailed geography research into crisp, engaging video lessons through structured editing, visual cues, and clean storytelling."
+          },
+          {
+            name: "Scientific Research",
+            applied: "Applied in: Aqua-Beetle Fog Harvester & Passive Mechanical Water-Leak Detector",
+            focus: "Biomimicry, mechanical problem-solving, and NCSC experimental documentation.",
+            desc: "Investigating natural systems and physical engineering principles to design zero-electricity solutions tested for science congresses."
+          },
+          {
+            name: "Project Management",
+            applied: "Applied in: NCSC Submissions, AstravoraX Production & Web Builds",
+            focus: "Milestone planning, iterative prototyping, and multi-disciplinary execution.",
+            desc: "Balancing academics, International Chess Festival preparation, YouTube publishing schedules, and web design deliverables with disciplined execution."
+          }
+        ];
+
+        var skillButtons = document.querySelectorAll(".skill-tag");
+        var skillName = document.getElementById("skillName");
+        var skillApplied = document.getElementById("skillApplied");
+        var skillFocus = document.getElementById("skillFocus");
+        var skillDesc = document.getElementById("skillDesc");
+
+        skillButtons.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var idx = Number(btn.getAttribute("data-skill"));
+            var item = skillsData[idx];
+            if (!item) return;
+
+            skillButtons.forEach(function (b) {
+              b.classList.remove("active");
+            });
+            btn.classList.add("active");
+
+            skillName.textContent = item.name;
+            skillApplied.textContent = item.applied;
+            skillFocus.textContent = item.focus;
+            skillDesc.textContent = item.desc;
+          });
+        });
+
+        // Copy Email Button
+        var copyBtn = document.getElementById("copyEmailBtn");
+        var emailEl = document.getElementById("contactEmail");
+        if (copyBtn && emailEl) {
+          function markCopied() {
+            copyBtn.textContent = "Copied!";
+            setTimeout(function () {
+              copyBtn.textContent = "Copy Email";
+            }, 2200);
+          }
+          function fallbackCopy(text) {
+            var ta = document.createElement("textarea");
+            ta.value = text;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+              if (document.execCommand("copy")) markCopied();
+            } finally {
+              document.body.removeChild(ta);
+            }
+          }
+          copyBtn.addEventListener("click", function () {
+            var email = emailEl.textContent.trim();
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(email).then(markCopied).catch(function () {
+                fallbackCopy(email);
+              });
+            } else {
+              fallbackCopy(email);
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
